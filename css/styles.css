@@ -947,6 +947,13 @@ h4 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
   padding: var(--spacing-xl);
 }
 
+.stat-card:hover {
+  transform: none;
+  background: var(--glass-bg);
+  border-color: var(--glass-border);
+  box-shadow: none;
+}
+
 .stat-icon {
   font-size: 2rem;
   margin-bottom: var(--spacing-sm);
@@ -983,6 +990,13 @@ h4 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
 /* Ad Format Cards */
 .ad-format-card {
   padding: var(--spacing-xl);
+}
+
+.ad-format-card:hover {
+  transform: none;
+  background: var(--glass-bg);
+  border-color: var(--glass-border);
+  box-shadow: none;
 }
 
 .ad-format-badge {
