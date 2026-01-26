@@ -947,8 +947,9 @@ h4 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
   padding: var(--spacing-xl);
 }
 
+.stat-card,
 .stat-card:hover {
-  transform: none;
+  transition: none;
   background: var(--glass-bg);
   border-color: var(--glass-border);
   box-shadow: none;
@@ -992,8 +993,9 @@ h4 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
   padding: var(--spacing-xl);
 }
 
+.ad-format-card,
 .ad-format-card:hover {
-  transform: none;
+  transition: none;
   background: var(--glass-bg);
   border-color: var(--glass-border);
   box-shadow: none;
