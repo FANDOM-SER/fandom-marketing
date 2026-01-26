@@ -514,7 +514,7 @@ h4 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
 }
 
 .hero-note {
-  margin-top: var(--spacing-lg);
+  margin-top: var(--spacing-xl);
   display: flex;
   align-items: center;
   justify-content: center;
