@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="612" height="792" viewBox="0 0 612 792" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a1a;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1a0a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a1a2e;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Glow effects -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- QR code placeholder pattern -->
+    <pattern id="qrPattern" patternUnits="userSpaceOnUse" width="20" height="20">
+      <rect width="20" height="20" fill="#ffffff"/>
+      <rect x="0" y="0" width="10" height="10" fill="#000000"/>
+      <rect x="10" y="10" width="10" height="10" fill="#000000"/>
+    </pattern>
+
+    <!-- Purple gradient for accents -->
+    <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Green gradient for CTA -->
+    <linearGradient id="greenGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#34d399;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="612" height="792" fill="url(#bgGradient)"/>
+
+  <!-- Decorative stars/dots -->
+  <circle cx="50" cy="100" r="2" fill="#ffffff" opacity="0.3"/>
+  <circle cx="550" cy="150" r="1.5" fill="#ffffff" opacity="0.4"/>
+  <circle cx="100" cy="700" r="1" fill="#ffffff" opacity="0.3"/>
+  <circle cx="500" cy="650" r="2" fill="#ffffff" opacity="0.2"/>
+  <circle cx="80" cy="400" r="1.5" fill="#ffffff" opacity="0.3"/>
+  <circle cx="530" cy="350" r="1" fill="#ffffff" opacity="0.4"/>
+  <circle cx="150" cy="200" r="1" fill="#8b5cf6" opacity="0.5"/>
+  <circle cx="450" cy="600" r="1.5" fill="#10b981" opacity="0.4"/>
+
+  <!-- Top decorative line -->
+  <rect x="206" y="60" width="200" height="3" rx="1.5" fill="url(#purpleGradient)" filter="url(#glow)"/>
+
+  <!-- FNDM Logo -->
+  <text x="306" y="120" font-family="Arial Black, Arial, sans-serif" font-size="48" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="8">FNDM</text>
+
+  <!-- Tagline -->
+  <text x="306" y="155" font-family="Arial, sans-serif" font-size="14" fill="#a78bfa" text-anchor="middle" letter-spacing="3">PLAY. EARN. FLY.</text>
+
+  <!-- Main headline -->
+  <text x="306" y="220" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#ffffff" text-anchor="middle">Waiting for your flight?</text>
+
+  <!-- Sub-headline -->
+  <text x="306" y="260" font-family="Arial, sans-serif" font-size="24" fill="#e2e8f0" text-anchor="middle">Play games. Win prizes.</text>
+
+  <!-- QR Code container -->
+  <rect x="181" y="300" width="250" height="250" rx="16" fill="#ffffff"/>
+  <rect x="191" y="310" width="230" height="230" rx="8" fill="#f8fafc"/>
+
+  <!-- QR Code placeholder text -->
+  <text x="306" y="420" font-family="Arial, sans-serif" font-size="14" fill="#64748b" text-anchor="middle">QR CODE</text>
+  <text x="306" y="440" font-family="Arial, sans-serif" font-size="12" fill="#94a3b8" text-anchor="middle">Generate at qr-code-generator.com</text>
+  <text x="306" y="460" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">with URL below</text>
+
+  <!-- URL display -->
+  <rect x="131" y="575" width="350" height="40" rx="8" fill="#1e1b4b" stroke="#4c1d95" stroke-width="2"/>
+  <text x="306" y="600" font-family="Courier New, monospace" font-size="14" fill="#a78bfa" text-anchor="middle">fndm.app?utm_source=qr_sfb</text>
+
+  <!-- Gate indicator placeholder -->
+  <text x="306" y="640" font-family="Arial, sans-serif" font-size="12" fill="#64748b" text-anchor="middle">utm_medium=poster&amp;utm_campaign=gate_XX</text>
+
+  <!-- Features list -->
+  <g transform="translate(156, 670)">
+    <circle cx="15" cy="8" r="6" fill="url(#greenGradient)"/>
+    <text x="30" y="12" font-family="Arial, sans-serif" font-size="13" fill="#e2e8f0">Free to play</text>
+
+    <circle cx="130" cy="8" r="6" fill="url(#greenGradient)"/>
+    <text x="145" y="12" font-family="Arial, sans-serif" font-size="13" fill="#e2e8f0">Win real prizes</text>
+
+    <circle cx="265" cy="8" r="6" fill="url(#greenGradient)"/>
+    <text x="280" y="12" font-family="Arial, sans-serif" font-size="13" fill="#e2e8f0">No download</text>
+  </g>
+
+  <!-- Bottom CTA -->
+  <rect x="181" y="710" width="250" height="50" rx="25" fill="url(#greenGradient)" filter="url(#glow)"/>
+  <text x="306" y="742" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#ffffff" text-anchor="middle">Scan to Play</text>
+
+  <!-- Bottom decorative line -->
+  <rect x="206" y="775" width="200" height="3" rx="1.5" fill="url(#purpleGradient)" opacity="0.5"/>
+</svg>
