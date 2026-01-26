@@ -23,6 +23,9 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>">
 
   <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Tracking Script -->
+  <script src="js/tracking.js" defer></script>
 </head>
 <body>
   <!-- Animated Background -->
@@ -55,7 +58,7 @@
       </ul>
 
       <div class="nav-cta">
-        <a href="https://beta.fndm.app" class="btn btn-primary btn-sm">Set Up Your Player</a>
+        <a href="https://beta.fndm.app" class="btn btn-primary btn-sm" onclick="window.fndmTracking && window.fndmTracking.trackCtaClick('beta.fndm.app')">Set Up Your Player</a>
       </div>
 
       <button class="nav-toggle" aria-label="Toggle navigation">
@@ -87,7 +90,7 @@
           </p>
 
           <div class="hero-cta">
-            <a href="https://beta.fndm.app" class="btn btn-primary btn-lg">
+            <a href="https://beta.fndm.app" class="btn btn-primary btn-lg" onclick="window.fndmTracking && window.fndmTracking.trackCtaClick('beta.fndm.app')">
               Set Up Your Player
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -253,7 +256,7 @@
         <div class="cta-banner reveal">
           <h2>Ready to turn your wait time<br>into <span class="gradient-text">game time</span>?</h2>
           <p>Join thousands of travelers already playing at airports worldwide.</p>
-          <a href="https://beta.fndm.app" class="btn btn-primary btn-lg">
+          <a href="https://beta.fndm.app" class="btn btn-primary btn-lg" onclick="window.fndmTracking && window.fndmTracking.trackCtaClick('beta.fndm.app')">
             Play Now - It's Free
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
