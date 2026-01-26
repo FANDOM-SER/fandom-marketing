@@ -513,6 +513,16 @@ h4 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
   justify-content: center;
 }
 
+.hero-note {
+  margin-top: var(--spacing-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+}
+
 /* ============================================
    STEPS / HOW IT WORKS
    ============================================ */
