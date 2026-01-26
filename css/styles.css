@@ -268,13 +268,16 @@ h4 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
 .glass-card:hover {
   background: var(--glass-bg-hover);
   border-color: var(--glass-border-hover);
-  transform: translateY(-4px);
   box-shadow: var(--glow-purple-soft);
 }
 
 .glass-card.no-hover:hover {
-  transform: none;
   box-shadow: none;
+}
+
+/* Cards that lift on hover */
+.glass-card.lift:hover {
+  transform: translateY(-4px);
 }
 
 .glass-card--glow {
