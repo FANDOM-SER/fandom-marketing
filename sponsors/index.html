@@ -347,7 +347,7 @@
 
         <div class="reveal">
           <div class="glass-card contact-form" style="padding: var(--spacing-2xl);">
-            <form name="sponsor-inquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+            <form name="sponsor-inquiry" method="POST" data-netlify="true" data-netlify-recaptcha="true" netlify-honeypot="bot-field">
               <input type="hidden" name="form-name" value="sponsor-inquiry">
               <p class="hidden">
                 <label>Don't fill this out: <input name="bot-field"></label>
@@ -384,6 +384,10 @@
               <div class="form-group">
                 <label for="message">Tell us about your goals</label>
                 <textarea id="message" name="message" class="form-textarea" placeholder="What are you hoping to achieve with FNDM advertising?" rows="4"></textarea>
+              </div>
+
+              <div class="form-group">
+                <div data-netlify-recaptcha="true"></div>
               </div>
 
               <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
