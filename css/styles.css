@@ -526,26 +526,6 @@ h4 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
   opacity: 0.7;
 }
 
-.pronunciation-sep {
-  color: var(--text-muted);
-  opacity: 0.5;
-}
-
-.pronunciation-def {
-  color: var(--text-secondary);
-}
-
-@media (max-width: 640px) {
-  .pronunciation {
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .pronunciation-sep {
-    display: none;
-  }
-}
-
 .hero h1 {
   margin-bottom: var(--spacing-md);
 }
