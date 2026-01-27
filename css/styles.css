@@ -490,7 +490,60 @@ h4 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
   border-radius: var(--radius-full);
   font-size: 0.875rem;
   color: var(--accent-purple-light);
+  margin-bottom: var(--spacing-md);
+}
+
+/* Pronunciation Guide */
+.pronunciation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
   margin-bottom: var(--spacing-lg);
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+}
+
+.pronunciation-word {
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.pronunciation-phonetic {
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.pronunciation-pos {
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+.pronunciation-sep {
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+.pronunciation-def {
+  color: var(--text-secondary);
+}
+
+@media (max-width: 640px) {
+  .pronunciation {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .pronunciation-sep {
+    display: none;
+  }
 }
 
 .hero h1 {
