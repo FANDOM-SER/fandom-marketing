@@ -389,8 +389,8 @@ h4 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
 }
 
 .nav-logo-lockup {
-  display: inline-flex;
-  flex-direction: column;
+  display: inline-flex !important;
+  flex-direction: column !important;
   align-items: flex-start;
   text-decoration: none;
   gap: 0;
@@ -409,11 +409,14 @@ h4 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
 
 .nav-logo-lockup .nav-pronunciation {
   display: block;
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   line-height: 1;
-  color: rgba(255, 255, 255, 0.4);
-  margin-top: 2px;
-  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.5) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.5) !important;
+  background: none !important;
+  margin-top: 3px;
+  letter-spacing: 0.02em;
+  font-weight: 400;
 }
 
 .nav-links {
