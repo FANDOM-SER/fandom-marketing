@@ -398,6 +398,31 @@ h4 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
   background-clip: text;
 }
 
+.nav-pronunciation {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.nav-pronunciation .pronunciation-phonetic {
+  opacity: 0.7;
+}
+
+.nav-pronunciation .pronunciation-pos {
+  font-size: 0.75rem;
+  font-style: italic;
+  opacity: 0.5;
+}
+
+/* Hide on larger screens where nav-links are visible */
+@media (min-width: 769px) {
+  .nav-pronunciation {
+    display: none;
+  }
+}
+
 .nav-links {
   display: flex;
   align-items: center;
