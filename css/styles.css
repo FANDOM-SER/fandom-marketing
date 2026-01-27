@@ -409,7 +409,7 @@ h4 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
 }
 
 .nav-logo-lockup .nav-pronunciation {
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   line-height: 1;
   margin-top: 3px;
   letter-spacing: 0.02em;
