@@ -114,6 +114,16 @@
       color: #fbbf24;
     }
 
+    .entity-notice {
+      background: rgba(255, 255, 255, 0.05);
+      border-left: 3px solid #f59e0b;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
     @media print {
       .nav, .footer, .cosmic-bg, .stars {
         display: none !important;
@@ -171,6 +181,10 @@
     <div class="legal-content">
       <div class="legal-header">
         <h1>Terms of Service</h1>
+        <p class="entity-notice">
+          These Terms of Service ("Terms") are a legal agreement between you and
+          <strong>FNDM Ventures, LLC</strong>, a Florida limited liability company ("FNDM," "we," "us," or "our").
+        </p>
         <p class="legal-meta">Last updated: January 28, 2026</p>
 
         <div class="legal-disclaimer">
@@ -189,10 +203,14 @@
           <li><a href="#token">$FNDM Token (Future)</a></li>
           <li><a href="#lottery">Lottery & Games</a></li>
           <li><a href="#social">Social Media Integration</a></li>
+          <li><a href="#wallet">Wallet Connection & NFT Verification</a></li>
           <li><a href="#conduct">Prohibited Conduct</a></li>
           <li><a href="#ip">Intellectual Property</a></li>
           <li><a href="#disclaimers">Disclaimers</a></li>
           <li><a href="#liability">Limitation of Liability</a></li>
+          <li><a href="#governing-law">Governing Law</a></li>
+          <li><a href="#disputes">Dispute Resolution</a></li>
+          <li><a href="#general">General Provisions</a></li>
           <li><a href="#changes">Changes to Terms</a></li>
           <li><a href="#contact">Contact Us</a></li>
         </ol>
@@ -201,7 +219,7 @@
       <section class="legal-section" id="acceptance">
         <h2>1. Acceptance of Terms</h2>
         <p>By accessing or using FNDM ("the Service"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, please do not use the Service.</p>
-        <p>You must be at least 13 years of age to use this Service. By using FNDM, you represent and warrant that you are at least 13 years old. If you are under 18, you represent that you have your parent or guardian's permission to use the Service.</p>
+        <p><strong>Age Requirement:</strong> You must be at least 13 years of age to use this Service. By creating an account, you represent and warrant that you are at least 13 years old. If you are between 13 and 18 years of age, you represent that you have your parent or guardian's permission to use the Service. We reserve the right to request age verification at any time and may terminate accounts that do not meet age requirements.</p>
       </section>
 
       <section class="legal-section" id="service">
@@ -290,8 +308,21 @@
         </ul>
       </section>
 
+      <section class="legal-section" id="wallet">
+        <h2>9. Wallet Connection & NFT Verification</h2>
+        <p>FNDM allows you to connect a Solana wallet to verify NFT ownership for community benefits. By connecting your wallet, you acknowledge and agree:</p>
+        <ul>
+          <li><strong>No Private Key Access:</strong> FNDM never has access to your private keys, seed phrases, or the ability to initiate transactions on your behalf.</li>
+          <li><strong>Public Information:</strong> Your wallet address is public information on the blockchain. We store it only to verify your NFT ownership.</li>
+          <li><strong>Your Responsibility:</strong> You are solely responsible for the security of your wallet. FNDM is not liable for any loss of cryptocurrency, NFTs, or other digital assets.</li>
+          <li><strong>Verification Accuracy:</strong> NFT verification is based on blockchain data at the time of verification. If you transfer an NFT, your verification status and associated benefits may be revoked.</li>
+          <li><strong>Disconnect Anytime:</strong> You may disconnect your wallet at any time from your profile settings.</li>
+        </ul>
+        <p><strong>DISCLAIMER:</strong> FNDM IS NOT RESPONSIBLE FOR ANY LOSSES RELATED TO YOUR WALLET, INCLUDING BUT NOT LIMITED TO HACKS, PHISHING ATTACKS, LOST KEYS, OR FAILED TRANSACTIONS. CONNECTING YOUR WALLET IS ENTIRELY AT YOUR OWN RISK.</p>
+      </section>
+
       <section class="legal-section" id="conduct">
-        <h2>9. Prohibited Conduct</h2>
+        <h2>10. Prohibited Conduct</h2>
         <p>You agree not to:</p>
         <ul>
           <li>Use cheats, bots, scripts, or automated tools</li>
@@ -307,7 +338,7 @@
       </section>
 
       <section class="legal-section" id="ip">
-        <h2>10. Intellectual Property</h2>
+        <h2>11. Intellectual Property</h2>
         <p>All content, features, and functionality of the Service are owned by FNDM and are protected by intellectual property laws:</p>
         <ul>
           <li>The FNDM name, logo, and branding are our trademarks</li>
@@ -318,7 +349,7 @@
       </section>
 
       <section class="legal-section" id="disclaimers">
-        <h2>11. Disclaimers</h2>
+        <h2>12. Disclaimers</h2>
         <p>THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED.</p>
         <ul>
           <li>We do not guarantee the accuracy of flight information displayed in the app</li>
@@ -330,7 +361,7 @@
       </section>
 
       <section class="legal-section" id="liability">
-        <h2>12. Limitation of Liability</h2>
+        <h2>13. Limitation of Liability</h2>
         <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, FNDM SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO:</p>
         <ul>
           <li>Loss of profits, data, or goodwill</li>
@@ -341,8 +372,57 @@
         <p>Our total liability shall not exceed the amount you paid to us in the 12 months preceding the claim, or $100, whichever is greater.</p>
       </section>
 
+      <section class="legal-section" id="governing-law">
+        <h2>14. Governing Law</h2>
+        <p>These Terms shall be governed by and construed in accordance with the laws of the State of Florida, without regard to its conflict of law provisions.</p>
+        <p>Any legal action or proceeding arising from these Terms shall be brought exclusively in the state or federal courts located in Florida, and you consent to the personal jurisdiction of such courts.</p>
+      </section>
+
+      <section class="legal-section" id="disputes">
+        <h2>15. Dispute Resolution</h2>
+
+        <h3>Informal Resolution First</h3>
+        <p>Before filing any legal claim against FNDM, you agree to contact us at <a href="mailto:support@fndm.app" style="color: var(--accent-purple-light);">support@fndm.app</a> and attempt to resolve the dispute informally for at least 30 days. Most disputes can be resolved this way.</p>
+
+        <h3>Binding Arbitration</h3>
+        <p>If we cannot resolve a dispute informally, any dispute, claim, or controversy arising out of or relating to these Terms or the Service shall be resolved through binding arbitration administered by the American Arbitration Association (AAA) under its Consumer Arbitration Rules.</p>
+        <ul>
+          <li>Arbitration shall take place in Florida, or remotely via video conference at your election.</li>
+          <li>The arbitrator's decision shall be final and binding.</li>
+          <li>Judgment on the arbitration award may be entered in any court of competent jurisdiction.</li>
+        </ul>
+
+        <h3>Class Action Waiver</h3>
+        <p><strong>YOU AND FNDM AGREE THAT EACH MAY BRING CLAIMS AGAINST THE OTHER ONLY IN YOUR OR ITS INDIVIDUAL CAPACITY AND NOT AS A PLAINTIFF OR CLASS MEMBER IN ANY PURPORTED CLASS OR REPRESENTATIVE PROCEEDING.</strong> The arbitrator may not consolidate more than one person's claims and may not preside over any form of class or representative proceeding.</p>
+
+        <h3>Exceptions</h3>
+        <p>Notwithstanding the above, either party may seek injunctive or other equitable relief in any court of competent jurisdiction to prevent the actual or threatened infringement of intellectual property rights or unauthorized access to the Service.</p>
+
+        <h3>Opt-Out</h3>
+        <p>You may opt out of this arbitration agreement by sending written notice to <a href="mailto:support@fndm.app" style="color: var(--accent-purple-light);">support@fndm.app</a> within 30 days of creating your account. Your notice must include your name, email address, and a clear statement that you wish to opt out of arbitration.</p>
+      </section>
+
+      <section class="legal-section" id="general">
+        <h2>16. General Provisions</h2>
+
+        <h3>Entire Agreement</h3>
+        <p>These Terms, together with our <a href="/privacy.html" style="color: var(--accent-purple-light);">Privacy Policy</a> and any other policies referenced herein, constitute the entire agreement between you and FNDM Ventures, LLC regarding your use of the Service and supersede all prior agreements.</p>
+
+        <h3>Severability</h3>
+        <p>If any provision of these Terms is found to be unenforceable or invalid by a court of competent jurisdiction, that provision shall be limited or eliminated to the minimum extent necessary, and the remaining provisions shall continue in full force and effect.</p>
+
+        <h3>Waiver</h3>
+        <p>Our failure to enforce any right or provision of these Terms shall not constitute a waiver of such right or provision. Any waiver must be in writing and signed by FNDM.</p>
+
+        <h3>Assignment</h3>
+        <p>We may assign or transfer our rights and obligations under these Terms without restriction. You may not assign or transfer your rights without our prior written consent.</p>
+
+        <h3>Notices</h3>
+        <p>We may provide notices to you via email, in-app notification, or by posting on the Service. You may provide notices to us at <a href="mailto:support@fndm.app" style="color: var(--accent-purple-light);">support@fndm.app</a>.</p>
+      </section>
+
       <section class="legal-section" id="changes">
-        <h2>13. Changes to Terms</h2>
+        <h2>17. Changes to Terms</h2>
         <p>We reserve the right to modify these Terms at any time. When we make changes:</p>
         <ul>
           <li>We will update the "Last updated" date at the top of this page</li>
@@ -353,11 +433,13 @@
       </section>
 
       <section class="legal-section" id="contact">
-        <h2>14. Contact Us</h2>
+        <h2>18. Contact Us</h2>
         <p>If you have questions about these Terms, please contact us:</p>
         <ul>
-          <li>Email: <a href="mailto:support@fndm.app" style="color: var(--accent-purple-light);">support@fndm.app</a></li>
+          <li><strong>Email:</strong> <a href="mailto:support@fndm.app" style="color: var(--accent-purple-light);">support@fndm.app</a></li>
+          <li><strong>Legal Inquiries:</strong> <a href="mailto:legal@fndm.app" style="color: var(--accent-purple-light);">legal@fndm.app</a></li>
         </ul>
+        <p><strong>FNDM Ventures, LLC</strong></p>
       </section>
     </div>
   </main>
@@ -366,7 +448,7 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-bottom" style="border-top: none; padding-top: 0;">
-        <p>&copy; 2026 FNDM. All rights reserved.</p>
+        <p>&copy; 2026 FNDM Ventures, LLC. All rights reserved.</p>
         <div class="footer-bottom-links">
           <a href="/privacy.html">Privacy</a>
           <a href="/terms.html">Terms</a>

@@ -145,6 +145,16 @@
       font-size: 0.875rem;
     }
 
+    .entity-notice {
+      background: rgba(255, 255, 255, 0.05);
+      border-left: 3px solid #f59e0b;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
     @media print {
       .nav, .footer, .cosmic-bg, .stars {
         display: none !important;
@@ -202,6 +212,11 @@
     <div class="legal-content">
       <div class="legal-header">
         <h1>Privacy Policy</h1>
+        <p class="entity-notice">
+          FNDM is operated by <strong>FNDM Ventures, LLC</strong>, a Florida limited liability company
+          ("FNDM," "we," "us," or "our"). This Privacy Policy describes how we collect, use, and
+          share your information when you use our service.
+        </p>
         <p class="legal-meta">Last updated: January 28, 2026</p>
 
         <div class="legal-disclaimer">
@@ -214,6 +229,7 @@
         <ol>
           <li><a href="#collect">Information We Collect</a></li>
           <li><a href="#boarding-pass">Boarding Pass Verification</a></li>
+          <li><a href="#wallet-data">Wallet & NFT Data</a></li>
           <li><a href="#use">How We Use Information</a></li>
           <li><a href="#sharing">Information Sharing</a></li>
           <li><a href="#third-party">Third-Party Services</a></li>
@@ -223,6 +239,7 @@
           <li><a href="#rights">Your Rights</a></li>
           <li><a href="#children">Children's Privacy</a></li>
           <li><a href="#international">International Users</a></li>
+          <li><a href="#california">California Privacy Rights (CCPA)</a></li>
           <li><a href="#changes">Changes to Policy</a></li>
           <li><a href="#contact">Contact Us</a></li>
         </ol>
@@ -279,8 +296,29 @@
         <p>This information is used to enable flight-specific features such as destination trivia games and the seat lottery. You can delete your flight history at any time from your profile settings.</p>
       </section>
 
+      <section class="legal-section" id="wallet-data">
+        <h2>3. Wallet & NFT Data</h2>
+        <p>If you choose to connect a Solana wallet to verify NFT community membership:</p>
+
+        <h3>Information We Collect:</h3>
+        <ul>
+          <li><strong>Wallet Address:</strong> Your public wallet address (this information is already public on the blockchain)</li>
+          <li><strong>NFT Ownership:</strong> We verify ownership of NFTs from specific collections to provide membership benefits (e.g., points multipliers)</li>
+          <li><strong>Verification Status:</strong> Whether you have successfully verified NFT ownership</li>
+        </ul>
+
+        <h3>Information We Do NOT Access:</h3>
+        <ul>
+          <li>Private keys or seed phrases</li>
+          <li>Ability to initiate transactions on your behalf</li>
+          <li>Other wallet contents beyond verified collections</li>
+        </ul>
+
+        <p>Wallet connection is entirely optional. You can disconnect your wallet at any time from your profile settings, which will remove the stored wallet address and any associated verification status.</p>
+      </section>
+
       <section class="legal-section" id="use">
-        <h2>3. How We Use Information</h2>
+        <h2>4. How We Use Information</h2>
         <p>We use the information we collect to:</p>
 
         <table class="data-table">
@@ -324,7 +362,7 @@
       </section>
 
       <section class="legal-section" id="sharing">
-        <h2>4. Information Sharing</h2>
+        <h2>5. Information Sharing</h2>
         <p><strong>We do not sell your personal information.</strong></p>
         <p>We may share information in the following circumstances:</p>
 
@@ -347,21 +385,25 @@
       </section>
 
       <section class="legal-section" id="third-party">
-        <h2>5. Third-Party Services</h2>
+        <h2>6. Third-Party Services</h2>
         <p>FNDM integrates with or uses the following third-party services:</p>
 
         <ul>
           <li><strong>AviationStack:</strong> Flight data API (no personal data shared)</li>
           <li><strong>X (Twitter):</strong> Winner announcements (first name only)</li>
           <li><strong>Cloudinary:</strong> Image hosting for profile pictures</li>
-          <li><strong>Survey Providers:</strong> Third-party surveys for earning points (Pollfish, BitLabs) - these providers have their own privacy policies</li>
+          <li><strong>Survey Providers:</strong> Third-party surveys for earning points (Pollfish, BitLabs)</li>
         </ul>
 
-        <p>These services have their own privacy policies, and we encourage you to review them.</p>
+        <p>These services have their own privacy policies:</p>
+        <ul>
+          <li><strong>Pollfish:</strong> <a href="https://www.pollfish.com/terms/respondent" target="_blank" rel="noopener" style="color: var(--accent-purple-light);">Privacy Policy</a></li>
+          <li><strong>BitLabs:</strong> <a href="https://www.bitlabs.ai/privacy-policy" target="_blank" rel="noopener" style="color: var(--accent-purple-light);">Privacy Policy</a></li>
+        </ul>
       </section>
 
       <section class="legal-section" id="data-wallet">
-        <h2>6. Data Wallet (Future)</h2>
+        <h2>7. Data Wallet (Future)</h2>
         <p>We are developing a Data Wallet feature that will give you more control over your data:</p>
         <ul>
           <li><strong>Data Ownership:</strong> You will be able to see all data we have about you</li>
@@ -373,7 +415,7 @@
       </section>
 
       <section class="legal-section" id="cookies">
-        <h2>7. Cookies & Tracking</h2>
+        <h2>8. Cookies & Tracking</h2>
         <p>We use the following technologies:</p>
 
         <h3>Essential Cookies</h3>
@@ -395,7 +437,7 @@
       </section>
 
       <section class="legal-section" id="security">
-        <h2>8. Data Security</h2>
+        <h2>9. Data Security</h2>
         <p>We implement industry-standard security measures to protect your data:</p>
         <ul>
           <li><strong>Encryption in Transit:</strong> All data is transmitted over HTTPS</li>
@@ -407,7 +449,7 @@
       </section>
 
       <section class="legal-section" id="rights">
-        <h2>9. Your Rights</h2>
+        <h2>10. Your Rights</h2>
         <p>You have the following rights regarding your data:</p>
 
         <h3>Access</h3>
@@ -431,14 +473,14 @@
       </section>
 
       <section class="legal-section" id="children">
-        <h2>10. Children's Privacy</h2>
+        <h2>11. Children's Privacy</h2>
         <p>FNDM is not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13.</p>
         <p>If we become aware that we have collected personal information from a child under 13, we will take steps to delete that information promptly.</p>
         <p>If you believe we have collected information from a child under 13, please contact us at privacy@fndm.app.</p>
       </section>
 
       <section class="legal-section" id="international">
-        <h2>11. International Users</h2>
+        <h2>12. International Users</h2>
         <p>FNDM is operated from the United States. If you are accessing the Service from outside the United States, please be aware that your information will be transferred to, stored, and processed in the United States.</p>
 
         <h3>For EU/EEA Users</h3>
@@ -450,8 +492,32 @@
         </ul>
       </section>
 
+      <section class="legal-section" id="california">
+        <h2>13. California Privacy Rights (CCPA)</h2>
+        <p>If you are a California resident, you have the following rights under the California Consumer Privacy Act (CCPA):</p>
+
+        <h3>Your Rights</h3>
+        <ul>
+          <li><strong>Right to Know:</strong> You may request disclosure of the categories and specific pieces of personal information we have collected about you in the past 12 months.</li>
+          <li><strong>Right to Delete:</strong> You may request deletion of your personal information, subject to certain exceptions.</li>
+          <li><strong>Right to Opt-Out of Sale:</strong> We do not sell your personal information. If this changes, we will provide a "Do Not Sell My Personal Information" link.</li>
+          <li><strong>Right to Non-Discrimination:</strong> We will not discriminate against you for exercising your CCPA rights.</li>
+        </ul>
+
+        <h3>How to Exercise Your Rights</h3>
+        <p>To submit a request, contact us at <a href="mailto:privacy@fndm.app" style="color: var(--accent-purple-light);">privacy@fndm.app</a> with the subject line "CCPA Request." We will verify your identity and respond within 45 days.</p>
+
+        <h3>Categories of Information Collected</h3>
+        <p>In the past 12 months, we have collected the following categories of personal information:</p>
+        <ul>
+          <li>Identifiers (email address, name, IP address)</li>
+          <li>Internet activity (usage data, game scores, preferences)</li>
+          <li>Geolocation data (derived from IP address, flight destinations)</li>
+        </ul>
+      </section>
+
       <section class="legal-section" id="changes">
-        <h2>12. Changes to This Policy</h2>
+        <h2>14. Changes to This Policy</h2>
         <p>We may update this Privacy Policy from time to time. When we make changes:</p>
         <ul>
           <li>We will update the "Last updated" date at the top of this page</li>
@@ -462,13 +528,14 @@
       </section>
 
       <section class="legal-section" id="contact">
-        <h2>13. Contact Us</h2>
+        <h2>15. Contact Us</h2>
         <p>If you have questions about this Privacy Policy or our data practices, please contact us:</p>
         <ul>
           <li><strong>Privacy Inquiries:</strong> <a href="mailto:privacy@fndm.app" style="color: var(--accent-purple-light);">privacy@fndm.app</a></li>
           <li><strong>General Support:</strong> <a href="mailto:support@fndm.app" style="color: var(--accent-purple-light);">support@fndm.app</a></li>
         </ul>
         <p>We will respond to your inquiry within 30 days.</p>
+        <p><strong>FNDM Ventures, LLC</strong></p>
       </section>
     </div>
   </main>
@@ -477,7 +544,7 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-bottom" style="border-top: none; padding-top: 0;">
-        <p>&copy; 2026 FNDM. All rights reserved.</p>
+        <p>&copy; 2026 FNDM Ventures, LLC. All rights reserved.</p>
         <div class="footer-bottom-links">
           <a href="/privacy.html">Privacy</a>
           <a href="/terms.html">Terms</a>
