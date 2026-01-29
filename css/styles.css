@@ -414,9 +414,11 @@ h4 { font-size: clamp(1.25rem, 2vw, 1.5rem); }
   margin-top: 3px;
   letter-spacing: 0.02em;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.5);
-  -webkit-text-fill-color: rgba(255, 255, 255, 0.5);
-  background: none;
+  color: rgba(255, 255, 255, 0.6) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.6) !important;
+  background: none !important;
+  background-clip: unset !important;
+  -webkit-background-clip: unset !important;
 }
 
 .nav-links {
