@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FNDM — GTM Growth Strategy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #04050A;
+    --deep: #070910;
+    --blue: #0057FF;
+    --blue-bright: #1A6FFF;
+    --blue-glow: rgba(0,87,255,0.18);
+    --cyan: #00D4FF;
+    --white: #F0F2FF;
+    --muted: rgba(240,242,255,0.45);
+    --faint: rgba(240,242,255,0.09);
+    --faint2: rgba(240,242,255,0.05);
+    --gold: #FFB830;
+    --red: #FF4A6E;
+    --green: #00E5A0;
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-body);
+    overflow: hidden;
+  }
+
+  /* ── GATE ─────────────────────────────────────────── */
+  #gate {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--black);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 1.75rem;
+  }
+  .gate-logo {
+    font-family: var(--font-display); font-size: clamp(3rem,10vw,6rem);
+    font-weight: 800; letter-spacing: -.05em;
+    background: linear-gradient(135deg, var(--white) 30%, var(--cyan));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  #gate p {
+    color: var(--muted); font-size: .78rem;
+    font-family: var(--font-mono); letter-spacing: .18em; text-transform: uppercase;
+  }
+  .gate-form { display: flex; gap: .65rem; }
+  #gate-input {
+    background: var(--faint); border: 1px solid rgba(240,242,255,0.13);
+    border-radius: 4px; color: var(--white);
+    font-family: var(--font-mono); font-size: .95rem;
+    padding: .7rem 1.2rem; outline: none; width: 210px;
+    transition: border-color .2s;
+  }
+  #gate-input:focus { border-color: var(--blue); }
+  #gate-btn {
+    background: var(--blue); border: none; border-radius: 4px;
+    color: var(--white); font-family: var(--font-display);
+    font-weight: 700; font-size: .85rem; letter-spacing: .06em;
+    padding: .7rem 1.4rem; cursor: pointer; transition: background .2s, transform .1s;
+  }
+  #gate-btn:hover { background: var(--blue-bright); }
+  #gate-btn:active { transform: scale(.97); }
+  #gate-error { color: var(--red); font-family: var(--font-mono); font-size: .75rem; min-height: 1em; }
+
+  /* ── CHROME ───────────────────────────────────────── */
+  #progress {
+    position: fixed; top: 0; left: 0; height: 2px; z-index: 200;
+    background: linear-gradient(90deg, var(--blue), var(--cyan));
+    box-shadow: 0 0 14px var(--cyan);
+    transition: width .45s cubic-bezier(.4,0,.2,1);
+  }
+  #dots {
+    position: fixed; right: 1.4rem; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: .45rem; z-index: 200;
+  }
+  .dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--faint); border: 1px solid rgba(240,242,255,0.2);
+    cursor: pointer; transition: all .25s;
+  }
+  .dot.active {
+    background: var(--cyan); border-color: var(--cyan);
+    box-shadow: 0 0 8px var(--cyan); transform: scale(1.5);
+  }
+  #counter {
+    position: fixed; bottom: 1.4rem; right: 1.6rem;
+    font-family: var(--font-mono); font-size: .7rem;
+    color: var(--muted); z-index: 200; letter-spacing: .1em;
+  }
+  .nav-arrow {
+    position: fixed; top: 50%; transform: translateY(-50%); z-index: 150;
+    background: rgba(240,242,255,0.05); border: 1px solid var(--faint);
+    color: var(--muted); width: 2.4rem; height: 2.4rem;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: .95rem;
+    transition: all .2s; border-radius: 2px; user-select: none;
+  }
+  .nav-arrow:hover { background: rgba(0,87,255,0.15); color: var(--white); border-color: var(--blue); }
+  #nav-prev { left: .9rem; }
+  #nav-next { right: 3.2rem; }
+
+  /* ── SLIDES ───────────────────────────────────────── */
+  #deck { width: 100%; height: 100%; position: relative; }
+
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    padding: clamp(2rem, 5vw, 4.5rem) clamp(2rem, 6vw, 5rem);
+    opacity: 0; transform: translateX(55px);
+    pointer-events: none;
+    transition: opacity .48s cubic-bezier(.4,0,.2,1), transform .48s cubic-bezier(.4,0,.2,1);
+    overflow: hidden;
+  }
+  .slide.active { opacity: 1; transform: translateX(0); pointer-events: all; }
+  .slide.exit { opacity: 0; transform: translateX(-55px); }
+
+  .slide::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(0,87,255,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,87,255,0.035) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  .slide-inner { position: relative; z-index: 2; width: 100%; max-width: 1080px; }
+
+  /* ── TYPE ─────────────────────────────────────────── */
+  .eyebrow {
+    font-family: var(--font-mono); font-size: clamp(.62rem,1.1vw,.76rem);
+    letter-spacing: .22em; text-transform: uppercase; color: var(--cyan);
+    margin-bottom: .9rem; display: flex; align-items: center; gap: .65rem;
+  }
+  .eyebrow::before { content: ''; display: inline-block; width: 1.8rem; height: 1px; background: var(--cyan); }
+
+  h1, h2 { font-family: var(--font-display); font-weight: 800; line-height: 1.04; letter-spacing: -.03em; }
+  h1 { font-size: clamp(3.5rem,8vw,7.5rem); }
+  h2 { font-size: clamp(1.9rem,4vw,3.5rem); }
+
+  .lead { font-size: clamp(.9rem,1.6vw,1.1rem); color: var(--muted); line-height: 1.68; font-weight: 300; max-width: 640px; margin-top: .9rem; }
+
+  .accent { color: var(--cyan); }
+  .accent-gold { color: var(--gold); }
+  .accent-red { color: var(--red); }
+  .accent-green { color: var(--green); }
+
+  /* ── BADGES ───────────────────────────────────────── */
+  .badge {
+    display: inline-flex; align-items: center; gap: .45rem;
+    font-family: var(--font-mono); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
+    padding: .32rem .85rem; border-radius: 2px; margin-bottom: 1.1rem;
+  }
+  .badge-now   { background: rgba(0,212,255,0.1);  color: var(--cyan); border: 1px solid rgba(0,212,255,0.28); }
+  .badge-near  { background: rgba(0,87,255,0.1);   color: #7AADFF;    border: 1px solid rgba(0,87,255,0.32); }
+  .badge-mid   { background: rgba(255,184,48,0.1); color: var(--gold); border: 1px solid rgba(255,184,48,0.28); }
+  .badge-long  { background: rgba(0,229,160,0.1);  color: var(--green); border: 1px solid rgba(0,229,160,0.28); }
+  .badge-prob  { background: rgba(255,74,110,0.1); color: var(--red);  border: 1px solid rgba(255,74,110,0.28); }
+  .blink { width: 6px; height: 6px; border-radius: 50%; background: currentColor; animation: blink 1.8s infinite; }
+  @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.65)} }
+
+  /* ── CARDS ────────────────────────────────────────── */
+  .cards { display: grid; gap: 1px; margin-top: 2rem; }
+  .c3 { grid-template-columns: repeat(3,1fr); }
+  .c2 { grid-template-columns: repeat(2,1fr); }
+
+  .card {
+    background: var(--faint2); border: 1px solid var(--faint);
+    padding: clamp(1.1rem,2.2vw,1.8rem); position: relative; overflow: hidden;
+    transition: background .2s;
+  }
+  .card:hover { background: rgba(240,242,255,0.07); }
+  .card::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--blue), transparent);
+    opacity: 0; transition: opacity .3s;
+  }
+  .card:hover::after { opacity: 1; }
+  .card-icon { font-size: 1.4rem; display: block; margin-bottom: .6rem; }
+  .card-num  { font-family: var(--font-mono); font-size: clamp(1.8rem,3.5vw,2.8rem); font-weight: 500; line-height: 1; margin-bottom: .4rem; }
+  .card-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(.88rem,1.5vw,1.05rem); margin-bottom: .4rem; }
+  .card-body  { font-size: .82rem; color: var(--muted); line-height: 1.58; }
+  .card-label { font-family: var(--font-mono); font-size: .7rem; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; }
+
+  /* ── CALLOUT ──────────────────────────────────────── */
+  .callout {
+    margin-top: 1.75rem; padding: 1.1rem 1.5rem;
+    background: linear-gradient(135deg, rgba(0,87,255,0.09), rgba(0,212,255,0.05));
+    border: 1px solid rgba(0,212,255,0.18); border-left: 3px solid var(--cyan);
+    font-family: var(--font-display); font-size: clamp(.95rem,1.6vw,1.2rem);
+    font-weight: 700; line-height: 1.4;
+  }
+  .callout.red-callout {
+    background: linear-gradient(135deg, rgba(255,74,110,0.08), rgba(255,74,110,0.03));
+    border-color: rgba(255,74,110,0.2); border-left-color: var(--red);
+  }
+  .callout.green-callout {
+    background: linear-gradient(135deg, rgba(0,229,160,0.08), rgba(0,229,160,0.03));
+    border-color: rgba(0,229,160,0.2); border-left-color: var(--green);
+  }
+
+  /* ── PILLARS ──────────────────────────────────────── */
+  .pillars { margin-top: 1.75rem; display: flex; flex-direction: column; gap: 1px; }
+  .pillar {
+    display: flex; align-items: flex-start; gap: 1.4rem;
+    padding: 1.1rem 1.4rem; background: var(--faint2); border: 1px solid var(--faint);
+    transition: background .2s;
+  }
+  .pillar:hover { background: rgba(240,242,255,0.06); }
+  .pillar-num { font-family: var(--font-mono); font-size: .65rem; color: var(--cyan); letter-spacing: .1em; padding-top: .2rem; flex-shrink: 0; }
+  .pillar-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(.9rem,1.5vw,1.05rem); margin-bottom: .28rem; }
+  .pillar-body { font-size: .82rem; color: var(--muted); line-height: 1.55; }
+
+  /* ── FLOW ─────────────────────────────────────────── */
+  .flow { display: flex; align-items: stretch; gap: 0; margin: 1.75rem 0; }
+  .flow-node {
+    flex: 1; text-align: center; padding: 1.1rem .65rem;
+    background: var(--faint2); border: 1px solid var(--faint);
+  }
+  .flow-node-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(.82rem,1.35vw,.98rem); margin-bottom: .3rem; }
+  .flow-node-sub   { font-size: .72rem; color: var(--muted); font-family: var(--font-mono); letter-spacing: .04em; line-height: 1.4; }
+  .flow-arr {
+    width: 2.5rem; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; color: var(--blue); background: var(--black);
+    border-top: 1px solid var(--faint); border-bottom: 1px solid var(--faint);
+  }
+
+  /* ── PREDATORY CYCLE ──────────────────────────────── */
+  .cycle {
+    display: grid; grid-template-columns: repeat(5,1fr);
+    gap: 0; margin-top: 2rem; position: relative;
+  }
+  .cycle-step {
+    padding: 1.1rem .75rem; text-align: center;
+    background: var(--faint2); border: 1px solid var(--faint);
+    position: relative;
+  }
+  .cycle-step:not(:last-child)::after {
+    content: '→'; position: absolute; right: -1px; top: 50%;
+    transform: translateY(-50%) translateX(50%);
+    font-size: .85rem; color: var(--red); z-index: 2;
+    background: var(--black); padding: 0 .2rem;
+  }
+  .cycle-icon { font-size: 1.3rem; display: block; margin-bottom: .4rem; }
+  .cycle-label {
+    font-family: var(--font-mono); font-size: .62rem;
+    letter-spacing: .07em; text-transform: uppercase;
+    color: var(--muted); line-height: 1.5;
+  }
+  .cycle-label strong { display: block; color: var(--red); font-style: normal; margin-bottom: .2rem; font-family: var(--font-display); font-size: .8rem; }
+
+  /* ── CONTRAST TABLE ───────────────────────────────── */
+  .contrast {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; margin-top: 1.75rem;
+  }
+  .contrast-col { padding: 1.4rem 1.5rem; background: var(--faint2); border: 1px solid var(--faint); }
+  .contrast-col.bad  { border-top: 2px solid var(--red); }
+  .contrast-col.good { border-top: 2px solid var(--green); }
+  .contrast-header {
+    font-family: var(--font-mono); font-size: .68rem; letter-spacing: .15em;
+    text-transform: uppercase; margin-bottom: 1rem;
+  }
+  .contrast-item {
+    display: flex; align-items: flex-start; gap: .65rem;
+    font-size: .82rem; color: var(--muted); line-height: 1.55;
+    margin-bottom: .6rem;
+  }
+  .contrast-item::before { flex-shrink: 0; font-size: .85rem; margin-top: .05rem; }
+  .bad  .contrast-item::before { content: '✗'; color: var(--red); }
+  .good .contrast-item::before { content: '✓'; color: var(--green); }
+
+  /* ── TIMELINE ─────────────────────────────────────── */
+  .timeline { position: relative; margin-top: 2.25rem; display: grid; grid-template-columns: repeat(4,1fr); gap: 0; }
+  .timeline::before {
+    content: ''; position: absolute; top: 1.2rem; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, var(--cyan), var(--blue), var(--gold), var(--green));
+  }
+  .tl-item { padding: 2.8rem 1rem .9rem; position: relative; }
+  .tl-dot {
+    position: absolute; top: .75rem; left: 50%; transform: translateX(-50%);
+    width: 11px; height: 11px; border-radius: 50%; border: 2px solid;
+  }
+  .tl-item:nth-child(1) .tl-dot { background: var(--cyan);  border-color: var(--cyan);  box-shadow: 0 0 10px var(--cyan); }
+  .tl-item:nth-child(2) .tl-dot { background: #7AADFF;      border-color: #7AADFF; }
+  .tl-item:nth-child(3) .tl-dot { background: var(--gold);  border-color: var(--gold); }
+  .tl-item:nth-child(4) .tl-dot { background: var(--green); border-color: var(--green); }
+  .tl-phase  { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: .4rem; }
+  .tl-title  { font-family: var(--font-display); font-weight: 700; font-size: clamp(.82rem,1.35vw,.95rem); margin-bottom: .45rem; line-height: 1.2; }
+  .tl-list   { list-style: none; }
+  .tl-list li { font-size: .74rem; color: var(--muted); line-height: 1.65; padding-left: .7rem; position: relative; }
+  .tl-list li::before { content: '·'; position: absolute; left: 0; color: var(--cyan); }
+
+  /* ── CTA ──────────────────────────────────────────── */
+  .cta-tracks { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 2rem; }
+  .cta-track { padding: 1.8rem; background: var(--faint2); border: 1px solid var(--faint); text-align: center; transition: background .25s; }
+  .cta-track:hover { background: rgba(240,242,255,0.07); }
+  .cta-track-icon { font-size: 1.8rem; margin-bottom: .9rem; }
+  .cta-track-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(1rem,1.8vw,1.3rem); margin-bottom: .45rem; }
+  .cta-track-body  { font-size: .82rem; color: var(--muted); line-height: 1.6; }
+  .cta-link { display: inline-block; margin-top: 1.1rem; font-family: var(--font-mono); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--cyan); border-bottom: 1px solid rgba(0,212,255,0.28); padding-bottom: .12rem; cursor: pointer; }
+
+  /* ── KPI ROW ──────────────────────────────────────── */
+  .kpi-row { display: flex; gap: 1px; margin-top: 1.75rem; }
+  .kpi { flex: 1; padding: .9rem; background: var(--faint2); border: 1px solid var(--faint); text-align: center; }
+  .kpi-label { font-family: var(--font-mono); font-size: .62rem; color: var(--muted); letter-spacing: .12em; text-transform: uppercase; margin-bottom: .4rem; }
+  .kpi-value { font-family: var(--font-display); font-weight: 800; font-size: clamp(.95rem,1.8vw,1.25rem); }
+
+  /* ── DATA WALLET ──────────────────────────────────── */
+  .wallet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 2rem; }
+  .wallet-col { padding: 1.5rem; background: var(--faint2); border: 1px solid var(--faint); }
+  .wallet-col-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(.9rem,1.5vw,1.05rem); margin-bottom: 1rem; }
+  .wallet-item { display: flex; gap: .6rem; font-size: .8rem; color: var(--muted); line-height: 1.55; margin-bottom: .55rem; }
+  .wallet-item-icon { flex-shrink: 0; font-size: .9rem; margin-top: .05rem; }
+
+  .rev-ladder { margin-top: 1rem; display: flex; flex-direction: column; gap: 1px; }
+  .rev-step { display: flex; align-items: center; gap: 1rem; padding: .75rem 1rem; background: var(--faint2); border: 1px solid var(--faint); }
+  .rev-step-phase { font-family: var(--font-mono); font-size: .62rem; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; flex-shrink: 0; width: 4.5rem; }
+  .rev-step-value { font-family: var(--font-display); font-weight: 700; font-size: clamp(.85rem,1.4vw,.98rem); }
+
+  /* ── HERO ─────────────────────────────────────────── */
+  #hero-canvas { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+  .hero-logo {
+    font-family: var(--font-display); font-size: clamp(5rem,13vw,11rem);
+    font-weight: 800; letter-spacing: -.055em; line-height: .88;
+    background: linear-gradient(140deg, var(--white) 25%, var(--cyan) 85%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 1.4rem;
+  }
+  .hero-tagline { font-family: var(--font-display); font-size: clamp(.95rem,2.2vw,1.5rem); font-weight: 700; margin-bottom: .65rem; }
+  .hero-sub { font-family: var(--font-mono); font-size: clamp(.75rem,1.3vw,.88rem); color: var(--muted); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 1.75rem; }
+  .live-pill { display: inline-flex; align-items: center; gap: .45rem; font-family: var(--font-mono); font-size: .68rem; letter-spacing: .15em; text-transform: uppercase; padding: .35rem .9rem; background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.22); color: var(--cyan); border-radius: 2px; }
+
+  /* ── RESPONSIVE ───────────────────────────────────── */
+  @media (max-width: 768px) {
+    .c3, .c2 { grid-template-columns: 1fr; }
+    .cycle    { grid-template-columns: 1fr 1fr; }
+    .contrast { grid-template-columns: 1fr; }
+    .timeline { grid-template-columns: 1fr 1fr; }
+    .cta-tracks { grid-template-columns: 1fr; }
+    .wallet-grid { grid-template-columns: 1fr; }
+    .flow { flex-direction: column; }
+    .kpi-row { flex-wrap: wrap; }
+    .kpi { min-width: 45%; }
+    #dots, #nav-prev { display: none; }
+    #nav-next { right: 1rem; }
+  }
+
+  @media print {
+    .slide { position: relative !important; opacity: 1 !important; transform: none !important; height: 100vh; page-break-after: always; }
+    #gate, #progress, #dots, #counter, .nav-arrow { display: none !important; }
+    html, body { overflow: visible; }
+    #deck { height: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- GATE -->
+<div id="gate">
+  <div class="gate-logo">FNDM</div>
+  <p>Confidential — Enter access code</p>
+  <div class="gate-form">
+    <input type="password" id="gate-input" placeholder="••••••••" autocomplete="off">
+    <button id="gate-btn">Enter</button>
+  </div>
+  <div id="gate-error"></div>
+</div>
+
+<div id="progress"></div>
+<div id="dots"></div>
+<div id="counter"></div>
+<div class="nav-arrow" id="nav-prev">←</div>
+<div class="nav-arrow" id="nav-next">→</div>
+
+<div id="deck">
+
+  <!-- S1 HERO -->
+  <div class="slide active" id="s1">
+    <canvas id="hero-canvas"></canvas>
+    <div class="slide-inner">
+      <div class="hero-logo">FNDM</div>
+      <div class="hero-tagline">The Airport Entertainment &amp; Data Platform</div>
+      <div class="hero-sub">Go-To-Market Growth Strategy</div>
+      <div class="live-pill"><span class="blink"></span>Live in Market</div>
+    </div>
+  </div>
+
+  <!-- S2 THE PROBLEM -->
+  <div class="slide" id="s2">
+    <div class="slide-inner">
+      <div class="badge badge-prob"><span class="blink"></span>The Opportunity</div>
+      <h2>Loyalty Evolved Into<br><span class="accent-red">Something Broken.</span><br><span class="accent" style="font-size:70%;">We're Building What It Should Have Been.</span></h2>
+      <p class="lead">Traditional loyalty points became the travel industry's biggest recruitment tactic — evolved into a flywheel that funds itself on consumer debt. There's a better way.</p>
+      <div class="cycle">
+        <div class="cycle-step">
+          <span class="cycle-icon">🏨</span>
+          <div class="cycle-label"><strong>Brands</strong>Sell points wholesale to card co's at a discount</div>
+        </div>
+        <div class="cycle-step">
+          <span class="cycle-icon">💳</span>
+          <div class="cycle-label"><strong>Card Companies</strong>Use points as bait to recruit new cardholders</div>
+        </div>
+        <div class="cycle-step">
+          <span class="cycle-icon">👤</span>
+          <div class="cycle-label"><strong>Consumer</strong>Opens account chasing points. Carries a balance.</div>
+        </div>
+        <div class="cycle-step">
+          <span class="cycle-icon">📈</span>
+          <div class="cycle-label"><strong>Interest Income</strong>Funds the next round of point purchases — the flywheel spins.</div>
+        </div>
+        <div class="cycle-step">
+          <span class="cycle-icon">🔒</span>
+          <div class="cycle-label"><strong>Locked In</strong>Points expire. Redemption is narrow. Consumer loses.</div>
+        </div>
+      </div>
+      <div class="callout red-callout" style="margin-top:1.5rem;">
+        Interest income <span style="color:var(--red);">funds more point purchases</span> — which recruit more cardholders — which generate more interest. <span style="color:var(--red);">A self-perpetuating flywheel built on consumer debt.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- S3 FNDM'S ANSWER -->
+  <div class="slide" id="s3">
+    <div class="slide-inner">
+      <div class="eyebrow">Our Answer</div>
+      <h2>Engagement That's<br><span class="accent-green">Natural. Fun. Rewarding.</span></h2>
+      <p class="lead" style="margin-bottom:0;">Fascinating individualised content, destination games, and branded moments that make travelers <em>want</em> to engage — no credit application required.</p>
+      <div class="contrast">
+        <div class="contrast-col bad">
+          <div class="contrast-header" style="color:var(--red);">The Old Model</div>
+          <div class="contrast-item">Points sold to credit card companies at wholesale</div>
+          <div class="contrast-item">Rewards used to recruit cardholders into debt</div>
+          <div class="contrast-item">Consumer data owned and monetized by the brand</div>
+          <div class="contrast-item">Points expire, devalue, and have narrow redemption</div>
+          <div class="contrast-item">The intermediary (card co.) captures the value</div>
+        </div>
+        <div class="contrast-col good">
+          <div class="contrast-header" style="color:var(--green);">The FNDM Model</div>
+          <div class="contrast-item">Rewards earned through genuine engagement and play</div>
+          <div class="contrast-item">No credit product. No debt mechanism. No intermediary.</div>
+          <div class="contrast-item">Traveler owns their own preference and intent data</div>
+          <div class="contrast-item">Direct brand-to-traveler value exchange via Data Wallet</div>
+          <div class="contrast-item">The traveler captures the value — not a financial institution</div>
+        </div>
+      </div>
+      <div class="callout green-callout" style="margin-top:1.5rem;">
+        FNDM redirects the loyalty budget <span style="color:var(--green);">away from debt recruitment</span> and toward <span style="color:var(--green);">earned engagement.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- S4 OPPORTUNITY -->
+  <div class="slide" id="s4">
+    <div class="slide-inner">
+      <div class="eyebrow">The Market</div>
+      <h2>4.5 Billion Passengers.<br><span class="accent">Captive. Underserved.</span></h2>
+      <p class="lead">Airports are the last great captive audience in the attention economy — and the most underutilized channel for genuine loyalty engagement.</p>
+      <div class="cards c3" style="margin-top:1.75rem;">
+        <div class="card">
+          <div class="card-num accent">4.5B</div>
+          <div class="card-label">Annual global<br>air passengers</div>
+        </div>
+        <div class="card">
+          <div class="card-num accent">2.5hr</div>
+          <div class="card-label">Average airport<br>dwell time</div>
+        </div>
+        <div class="card">
+          <div class="card-num" style="color:var(--red);">$120B</div>
+          <div class="card-label">Annual credit card<br>loyalty spend</div>
+        </div>
+      </div>
+      <div class="callout" style="margin-top:1.5rem;">
+        A fraction of that <span>$120B loyalty budget</span> redirected toward earned engagement is a massive market — and no one has built the platform to capture it.
+      </div>
+    </div>
+  </div>
+
+  <!-- S5 PRODUCT -->
+  <div class="slide" id="s5">
+    <div class="slide-inner">
+      <div class="eyebrow">The Product</div>
+      <h2>Destination Trivia.<br>Bucket Lists.<br><span class="accent">Flight Predictions.</span></h2>
+      <div class="cards c3" style="margin-top:1.75rem;">
+        <div class="card">
+          <span class="card-icon">🌍</span>
+          <div class="card-title">Destination Trivia Games</div>
+          <div class="card-body">Airport-native trivia that converts idle dwell time into active engagement — and generates rich behavioral data in the process.</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">📍</span>
+          <div class="card-title">Bucket List Builder</div>
+          <div class="card-body">Travelers curate dream destinations. Every saved location is a declared intent signal — the highest-value data in travel marketing.</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">✈️</span>
+          <div class="card-title">Flight Predictions</div>
+          <div class="card-body">Travelers predict flight prices, delays, and route trends — turning airport wait time into an engaging game with real utility.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S6 PHASE 1 -->
+  <div class="slide" id="s6">
+    <div class="slide-inner">
+      <div class="badge badge-now"><span class="blink"></span>Phase 1 — Now</div>
+      <h2>Acquire<br><span class="accent">Active Users</span></h2>
+      <p class="lead">Build habitual use through fun, useful travel features. Every activated user is a data point, a sponsor impression, and a proof of concept for the earned loyalty model.</p>
+      <div class="cards c2" style="margin-top:1.75rem;">
+        <div class="card">
+          <div class="card-title">Acquisition Channels</div>
+          <div class="card-body" style="margin-top:.4rem;">Airport WiFi portal placements · PR &amp; travel media · Organic &amp; social · Gate-level seeding · Word of mouth</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Activation Definition</div>
+          <div class="card-body" style="margin-top:.4rem;">2+ completed trivia rounds · Bucket list item saved · Session length &gt;4 min · Return within 30 days</div>
+        </div>
+      </div>
+      <div class="kpi-row">
+        <div class="kpi"><div class="kpi-label">KPI</div><div class="kpi-value">MAU</div></div>
+        <div class="kpi"><div class="kpi-label">KPI</div><div class="kpi-value">Session Depth</div></div>
+        <div class="kpi"><div class="kpi-label">KPI</div><div class="kpi-value">Activation Rate</div></div>
+        <div class="kpi"><div class="kpi-label">KPI</div><div class="kpi-value">D30 Retention</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S7 PHASE 2 -->
+  <div class="slide" id="s7">
+    <div class="slide-inner">
+      <div class="badge badge-near"><span class="blink"></span>Phase 2 — Near Term</div>
+      <h2>Monetize<br><span class="accent">Attention &amp; Intent</span></h2>
+      <p class="lead">Sponsors don't just want eyeballs. They want declared travel intent at peak attention. That's what FNDM's platform generates — and no one else has it.</p>
+      <div class="cards c2" style="margin-top:1.75rem;">
+        <div class="card">
+          <span class="card-icon">📢</span>
+          <div class="card-title">Sponsored Content &amp; Display</div>
+          <div class="card-body">Brand-native placements inside trivia and destination discovery — context-matched, high-attention inventory that outperforms traditional display.</div>
+        </div>
+        <div class="card">
+          <span class="card-icon">📊</span>
+          <div class="card-title">Traveler Intent Surveys</div>
+          <div class="card-body">Short, rewarded surveys at peak dwell time. Brands pay for verified travel intent data that no cookie, panel, or ad network can replicate.</div>
+        </div>
+      </div>
+      <div class="callout">
+        <span>"We don't sell impressions.</span> We sell verified travel intent — declared by the traveler, at the moment they're dreaming about their next trip."
+      </div>
+    </div>
+  </div>
+
+  <!-- S8 PHASE 3 -->
+  <div class="slide" id="s8">
+    <div class="slide-inner">
+      <div class="badge badge-mid"><span class="blink"></span>Phase 3 — Mid Term</div>
+      <h2>First Airline.<br><span class="accent-gold">New Loyalty Rails.</span></h2>
+      <p class="lead">We enter airline partnerships as a complement — a new earned engagement channel that activates travelers without requiring a credit product. A small reallocation of their existing loyalty budget, with zero cannibalization risk.</p>
+      <div class="flow">
+        <div class="flow-node">
+          <div class="flow-node-title" style="color:var(--cyan);">FNDM</div>
+          <div class="flow-node-sub">Earned engagement<br>&amp; intent signals</div>
+        </div>
+        <div class="flow-arr">→</div>
+        <div class="flow-node">
+          <div class="flow-node-title" style="color:var(--gold);">Airline Partner</div>
+          <div class="flow-node-sub">Miles allocated from<br>earned budget — not CC</div>
+        </div>
+        <div class="flow-arr">→</div>
+        <div class="flow-node">
+          <div class="flow-node-title" style="color:var(--green);">Traveler</div>
+          <div class="flow-node-sub">Rewards earned through<br>play. No debt. No lock-in.</div>
+        </div>
+      </div>
+      <div class="cards c3" style="margin-top:1px;">
+        <div class="card">
+          <div class="card-title">🔁 Incremental Engagement</div>
+          <div class="card-body">Activates travelers between flights, where loyalty programs currently have zero presence.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">📡 Data Enrichment</div>
+          <div class="card-body">First-party preference data enriches airline guest profiles — without a data broker intermediary.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">🧭 Strategic Path</div>
+          <div class="card-body">Enter as complement. Scale as infrastructure. The airline becomes a partner in replacing the old model.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S9 PHASE 4 DATA WALLET -->
+  <div class="slide" id="s9">
+    <div class="slide-inner">
+      <div class="badge badge-long"><span class="blink"></span>Phase 4 — Long Term</div>
+      <h2>The <span class="accent-green">Data Wallet.</span><br>The Model Flipped.</h2>
+      <div class="wallet-grid">
+        <div>
+          <div class="wallet-col" style="margin-bottom:1px;">
+            <div class="wallet-col-title" style="color:var(--green);">What the Data Wallet Does</div>
+            <div class="wallet-item"><span class="wallet-item-icon">🔐</span>Travelers own and control their preference and behavioral data</div>
+            <div class="wallet-item"><span class="wallet-item-icon">💰</span>Brands pay the traveler directly to access their intent data</div>
+            <div class="wallet-item"><span class="wallet-item-icon">🔄</span>FNDM orchestrates the exchange — the trusted intermediary</div>
+            <div class="wallet-item"><span class="wallet-item-icon">✂️</span>The credit card company is no longer necessary as an intermediary</div>
+          </div>
+          <div class="wallet-col">
+            <div class="wallet-col-title" style="color:var(--muted);font-size:.8rem;">Revenue Model Evolution</div>
+            <div class="rev-ladder">
+              <div class="rev-step"><div class="rev-step-phase">Phase 2</div><div class="rev-step-value">CPM Advertising</div></div>
+              <div class="rev-step"><div class="rev-step-phase">Phase 3</div><div class="rev-step-value">Partnership Rev Share</div></div>
+              <div class="rev-step" style="border-left:2px solid var(--green);"><div class="rev-step-phase">Phase 4</div><div class="rev-step-value" style="color:var(--green);">Data Marketplace</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="wallet-col">
+          <div class="wallet-col-title">3 Airlines. Platform Scale.</div>
+          <div class="wallet-item" style="margin-top:.5rem;"><span class="wallet-item-icon">✈️</span><div>3+ airline partners providing earned rewards across the platform — no single-program lock-in for travelers</div></div>
+          <div class="wallet-item"><span class="wallet-item-icon">🌐</span><div>Network effects: more airlines → more users → more data → more brand value → more airline partners</div></div>
+          <div class="wallet-item"><span class="wallet-item-icon">📊</span><div>Traveler intent data becomes the most valuable first-party dataset in travel — owned by the travelers themselves</div></div>
+          <div class="wallet-item"><span class="wallet-item-icon">🏦</span><div>The $120B loyalty budget redirected: from financing credit card debt to funding genuine earned engagement</div></div>
+          <div class="callout green-callout" style="margin-top:1.25rem;font-size:.9rem;">
+            We don't dismantle the old system. <span style="color:var(--green);">We make it optional. Then irrelevant.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S10 TIMELINE -->
+  <div class="slide" id="s10">
+    <div class="slide-inner">
+      <div class="eyebrow">Roadmap</div>
+      <h2>GTM <span class="accent">Timeline</span></h2>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-phase">Phase 1</div>
+          <div class="tl-title" style="color:var(--cyan);">Build the Audience</div>
+          <ul class="tl-list">
+            <li>User acquisition &amp; activation</li>
+            <li>WiFi portal placement</li>
+            <li>Organic &amp; PR growth</li>
+            <li>Baseline engagement metrics</li>
+          </ul>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-phase">Phase 2</div>
+          <div class="tl-title" style="color:#7AADFF;">Monetize Intent</div>
+          <ul class="tl-list">
+            <li>First sponsor signed</li>
+            <li>Survey product launch</li>
+            <li>Regional airport expansion</li>
+            <li>Intent data product defined</li>
+          </ul>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-phase">Phase 3</div>
+          <div class="tl-title" style="color:var(--gold);">New Loyalty Rails</div>
+          <ul class="tl-list">
+            <li>First airline BD close</li>
+            <li>Earned rewards integration live</li>
+            <li>B2B recurring revenue</li>
+            <li>Multi-airport footprint</li>
+          </ul>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-phase">Phase 4</div>
+          <div class="tl-title" style="color:var(--green);">Data Sovereignty</div>
+          <ul class="tl-list">
+            <li>3+ airline partners</li>
+            <li>Data Wallet launch</li>
+            <li>Traveler-owned data marketplace</li>
+            <li>Credit card model displaced</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S11 WHY NOW -->
+  <div class="slide" id="s11">
+    <div class="slide-inner">
+      <div class="eyebrow">Differentiation</div>
+      <h2>Why Now.<br><span class="accent">Why FNDM.</span></h2>
+      <div class="pillars">
+        <div class="pillar">
+          <div class="pillar-num">01</div>
+          <div>
+            <div class="pillar-title">Captive Audience — No Scroll-Away</div>
+            <div class="pillar-body">Airport travelers are physically present, emotionally primed, and have nowhere else to go. No other platform can replicate this attention quality or proximity to the travel decision.</div>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">02</div>
+          <div>
+            <div class="pillar-title">Data Moat — Declared Travel Intent</div>
+            <div class="pillar-body">Bucket lists, trivia choices, and dwell-time behavior generate proprietary first-party intent signals no airline, OTA, or ad network has access to at this resolution.</div>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">03</div>
+          <div>
+            <div class="pillar-title">Timing — Privacy Economy Meets Travel Boom</div>
+            <div class="pillar-body">Cookie deprecation and privacy regulation have made first-party intent data the most valuable asset in digital advertising — right as post-COVID travel demand hits record highs.</div>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">04</div>
+          <div>
+            <div class="pillar-title">Mission — Against the Predatory Loyalty Cycle</div>
+            <div class="pillar-body">Consumer sentiment is turning against credit card debt recruitment disguised as rewards. FNDM is positioned as the ethical alternative — earned loyalty, traveler-owned data, no financial intermediary.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S12 CTA -->
+  <div class="slide" id="s12">
+    <div class="slide-inner" style="text-align:center;max-width:860px;margin:0 auto;">
+      <div class="eyebrow" style="justify-content:center;">Let's Build Together</div>
+      <h2>The Loyalty Experience<br>Travelers Actually <span class="accent">Want to Join.</span></h2>
+      <p class="lead" style="margin:1rem auto 0;text-align:center;">FNDM turns airports into the most engaging brand touchpoint in travel — fun games, fascinating destination content, and individualised rewards that make loyalty programs magnetic again. No debt. No bait. Just genuine engagement travelers seek out.</p>
+      <div class="cta-tracks">
+        <div class="cta-track">
+          <div class="cta-track-icon">✈️</div>
+          <div class="cta-track-title">Partner With Us</div>
+          <div class="cta-track-body">Airlines and travel brands ready to become a magnet for active loyalty members — through earned engagement that no credit card co-brand deal can replicate.</div>
+          <a data-email="jonathan@fndm.app" class="cta-link email-link" style="text-decoration:none;">jonathan@fndm.app →</a>
+        </div>
+        <div class="cta-track">
+          <div class="cta-track-icon">📣</div>
+          <div class="cta-track-title">Sponsor FNDM</div>
+          <div class="cta-track-body">Reach high-intent travelers at the exact moment they're dreaming about where to go and what to spend — in a context where your brand is genuinely welcome.</div>
+          <a data-email="sponsors@fndm.app" class="cta-link email-link" style="text-decoration:none;">sponsors@fndm.app →</a>
+        </div>
+      </div>
+      <div style="margin-top:2.5rem;font-family:var(--font-display);font-size:clamp(2.2rem,5.5vw,4rem);font-weight:800;letter-spacing:-.05em;background:linear-gradient(135deg,var(--white) 25%,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">FNDM</div>
+      <div style="font-family:var(--font-mono);font-size:.68rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-top:.5rem;">
+        fndm.app
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  (function() {
+    const PASS = 'fndm2026';
+    let current = 0, slides = [], total = 0;
+
+    function checkPass() {
+      const input = document.getElementById('gate-input');
+      if (input.value === PASS) {
+        document.getElementById('gate').style.display = 'none';
+        initDeck();
+      } else {
+        const e = document.getElementById('gate-error');
+        e.textContent = 'Incorrect access code.';
+        setTimeout(() => e.textContent = '', 2200);
+        input.value = '';
+      }
+    }
+
+    function initCanvas() {
+      const c = document.getElementById('hero-canvas');
+      if (!c) return;
+      const ctx = c.getContext('2d');
+      let W, H, pts = [];
+      const resize = () => { W = c.width = c.offsetWidth; H = c.height = c.offsetHeight; };
+      const Pt = () => ({ x: Math.random()*W, y: Math.random()*H, vx:(Math.random()-.5)*.28, vy:(Math.random()-.5)*.28, r:Math.random()*1.4+.4, a:Math.random()*.35+.08 });
+      const init = () => { pts = Array.from({length:110}, Pt); };
+      const draw = () => {
+        ctx.clearRect(0,0,W,H);
+        pts.forEach(p => {
+          p.x+=p.vx; p.y+=p.vy;
+          if(p.x<0)p.x=W; if(p.x>W)p.x=0; if(p.y<0)p.y=H; if(p.y>H)p.y=0;
+          ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+          ctx.fillStyle='rgba(0,212,255,'+p.a+')'; ctx.fill();
+        });
+        pts.forEach((a,i) => pts.slice(i+1).forEach(b => {
+          const d=Math.hypot(a.x-b.x,a.y-b.y);
+          if(d<95){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle='rgba(0,87,255,'+(0.1*(1-d/95))+')';ctx.lineWidth=.5;ctx.stroke();}
+        }));
+        requestAnimationFrame(draw);
+      };
+      window.addEventListener('resize',()=>{resize();init();});
+      resize();init();draw();
+    }
+
+    function initDeck() {
+      slides = Array.from(document.querySelectorAll('.slide'));
+      total = slides.length;
+      const dc = document.getElementById('dots');
+      for (let i=0;i<total;i++) {
+        const d = document.createElement('div');
+        d.className='dot'+(i===0?' active':'');
+        (function(idx){ d.addEventListener('click', function(){ goTo(idx); }); })(i);
+        dc.appendChild(d);
+      }
+      document.getElementById('nav-prev').addEventListener('click', prevSlide);
+      document.getElementById('nav-next').addEventListener('click', nextSlide);
+      update();
+      initCanvas();
+      document.addEventListener('keydown', function(e) {
+        if(e.key==='ArrowRight'||e.key==='ArrowDown') nextSlide();
+        if(e.key==='ArrowLeft'||e.key==='ArrowUp') prevSlide();
+      });
+      var sx=null;
+      document.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;},{passive:true});
+      document.addEventListener('touchend',function(e){
+        if(sx===null)return;
+        var dx=e.changedTouches[0].clientX-sx;
+        if(Math.abs(dx)>50){ if(dx<0){nextSlide();}else{prevSlide();} }
+        sx=null;
+      },{passive:true});
+    }
+
+    function update() {
+      slides.forEach(function(s){s.classList.remove('active','exit');});
+      slides[current].classList.add('active');
+      document.querySelectorAll('.dot').forEach(function(d,i){d.classList.toggle('active',i===current);});
+      document.getElementById('progress').style.width=((current+1)/total*100)+'%';
+      document.getElementById('counter').textContent=(current+1)+' / '+total;
+    }
+
+    function goTo(i) {
+      if(i===current||i<0||i>=total)return;
+      slides[current].classList.remove('active');
+      slides[current].classList.add('exit');
+      var prev=current;
+      current=i;
+      setTimeout(function(){slides[prev].classList.remove('exit');},480);
+      update();
+    }
+
+    function nextSlide(){goTo(current+1);}
+    function prevSlide(){goTo(current-1);}
+
+    // Wire up gate controls after DOM ready
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('gate-btn').addEventListener('click', checkPass);
+      document.getElementById('gate-input').addEventListener('keydown', function(e){ if(e.key==='Enter') checkPass(); });
+    });
+
+  })();
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('a[data-email]').forEach(function(a) {
+      var e = a.getAttribute('data-email');
+      if (e) { a.href = 'mailto:' + e; }
+    });
+  });
+</script>
+</body>
+</html>

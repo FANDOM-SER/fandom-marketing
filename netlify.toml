@@ -11,6 +11,16 @@
   to = "/sponsors/index.html"
   status = 200
 
+[[redirects]]
+  from = "/gtm"
+  to = "/gtm/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/gtm/"
+  to = "/gtm/index.html"
+  status = 200
+
 [[headers]]
   for = "/*"
   [headers.values]
